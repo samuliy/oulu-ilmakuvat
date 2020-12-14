@@ -21,12 +21,12 @@ my $aerial_photos = $layers{Ilmakuvat};
 my %aerial_photos_layers = $aerial_photos->get_layers();
 
 my $layer_prompt = Prompt::List::SingleSelect->new(
-	keys %aerial_photos_layers
+	sort keys %aerial_photos_layers
 );
 my $layer_pick = $aerial_photos_layers{ $layer_prompt->prompt() };
 
 my $bbox_prompt = Prompt::List::SingleSelect->new(
-	map { $_->{SRS} } @{ $layer_pick->{BoundingBox} }
+	sort map { $_->{SRS} } @{ $layer_pick->{BoundingBox} }
 );
 my $bbox_pick = $bbox_prompt->prompt();
 $bbox_pick = (grep { $_->{SRS} eq $bbox_pick } @{ $layer_pick->{BoundingBox} })[0];
